@@ -9,42 +9,60 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
+    var isDeletedView:Bool = false
     
     var body: some View {
-        VStack {
-            
-            List(viewModel.tasks, id: \.name){ task in
-                HStack {
-                    Spacer()
-                    DogCard(title: task.name, desc:task.desc, completed: task.completed)
-                    Spacer()
-                     
-                }
-                .swipeActions() {
-                    Button(role: .destructive, action: {
-                        removeTask(task: task)
-                    }, label: {
-                        Image(systemName: "trash")
-                    })
-                }
+        NavigationStack {
+            VStack {
+                TaskList(tasks: viewModel.tasks.filter {!$0.deleted})
+                Button(action: {
+                    viewModel.getTasks()
+                }, label: {
+                    Text("Refresh")
+                })
+                Spacer()
+                Button(action: {
+                    viewModel.getTasks()
+                }, label: {
+                    NavigationLink("Deletes object") {
+                        TaskList(tasks: viewModel.tasks.filter {$0.deleted})
+                    }
+                })
+                
+                
             }
-            Button(action: {
+            .onAppear {
                 viewModel.getTasks()
-            }, label: {
-                /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
-            })
-            
-        }
-        .onAppear {
-            viewModel.getTasks()
+            }
         }
     }
     
-    private func removeTask(task: Task) {
-        
+    private func validateTask(task: Task) {
+        task.completed = true
     }
 }
 
 #Preview {
     ContentView()
+}
+
+
+struct ColorAnimationInSwiftUI: View {
+    
+    @State private var animate = false
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .fill(animate ? Color.orange : Color.gray.opacity(0.4))
+            Text("DevTechie")
+                .font(.largeTitle)
+                .foregroundColor(.white)
+        }
+        .frame(width: 300, height: 300)
+        .onTapGesture {
+            animate.toggle()
+        }
+        .animation(.easeInOut, value: animate)
+    }
 }

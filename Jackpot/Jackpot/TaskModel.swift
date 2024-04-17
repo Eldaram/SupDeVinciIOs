@@ -24,5 +24,6 @@ class TaskModel {
     
     func genTask() {
         taskList.append(Task(name:"test", desc:"this has to change"))
+        taskList.append(Task(name:"test2", desc:"say yes to change"))
     }
 }

@@ -15,8 +15,4 @@ class ContentViewModel: ObservableObject {
     func getTasks() {
         tasks = model.taskList
     }
-    
-    func removeTask(task: Task) {
-        
-    }
 }
