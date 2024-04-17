@@ -8,15 +8,15 @@
 import Foundation
 
 class ContentViewModel: ObservableObject {
-    var model = Model()
+    var model = TaskModel()
     var received: Bool = false
-    @Published var chiens: [Chien] = []
+    @Published var tasks: [Task] = []
     
-    func getDogs() {
-        chiens = model.dataBase
+    func getTasks() {
+        tasks = model.taskList
     }
     
-    func removeDog(dog: Chien) {
+    func removeTask(task: Task) {
         
     }
 }

@@ -12,7 +12,7 @@ extension View {
         self
             .foregroundColor(color)
             .frame(width: 200, height: height)
-            .background(LinearGradient(colors: [.red, .green, .blue], startPoint: .bottomTrailing, endPoint: .topLeading))
+            .background(.white)
             .clipShape(RoundedRectangle(cornerRadius: 25))
     }
 }

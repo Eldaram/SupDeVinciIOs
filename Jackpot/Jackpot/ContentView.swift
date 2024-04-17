@@ -13,34 +13,34 @@ struct ContentView: View {
     var body: some View {
         VStack {
             
-            List(viewModel.chiens, id: \.name){ dog in
+            List(viewModel.tasks, id: \.name){ task in
                 HStack {
                     Spacer()
-                    DogCard(name: dog.name, poids: dog.weight, age: dog.age)
+                    DogCard(title: task.name, desc:task.desc, completed: task.completed)
                     Spacer()
                      
                 }
                 .swipeActions() {
                     Button(role: .destructive, action: {
-                         remove(dog: dog)
+                        removeTask(task: task)
                     }, label: {
                         Image(systemName: "trash")
                     })
                 }
             }
             Button(action: {
-                viewModel.getDogs()
+                viewModel.getTasks()
             }, label: {
                 /*@START_MENU_TOKEN@*/Text("Button")/*@END_MENU_TOKEN@*/
             })
             
         }
         .onAppear {
-            viewModel.getDogs()
+            viewModel.getTasks()
         }
     }
     
-    private func remove(dog: Chien) {
+    private func removeTask(task: Task) {
         
     }
 }
