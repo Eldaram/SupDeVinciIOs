@@ -12,7 +12,9 @@ struct TaskList: View {
     
     var body: some View {
         List(tasks, id: \.name){ task in
-            TaskCard(id:0, title: task.name, desc:task.desc, completed: task.completed, completeing: task.completing, deleting: task.deleting)
+            NavigationLink(destination: AddTaskView(taskOpt: task)) {
+                TaskCard(id:0, title: task.name, desc:task.desc, completed: task.completed, deleted: task.deleted, important: task.priority, completeing: task.completing, deleting: task.deleting, priorising: task.prioritizing)
+            }
         }.listStyle(PlainListStyle())
     }
 }

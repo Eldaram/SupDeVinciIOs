@@ -18,12 +18,10 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 25.0)
                         .fill(.blue)
                         .frame(width: 250, height: 50)
-                    Button(action: {
-                        viewModel.addDefaultTask()
-                    }, label: {
+                    NavigationLink(destination: AddTaskView()) {
                         Image(systemName: "plus").foregroundColor(.black)
                         Text("New task").foregroundColor(.black)
-                    })
+                    }
                 }
                 TaskList(tasks: viewModel.tasks.filter {!$0.deleted})
                 Button(action: {
@@ -32,7 +30,7 @@ struct ContentView: View {
                     Text("Refresh")
                 })
                 Spacer()
-                NavigationLink("Deletes object") {
+                NavigationLink("Deleted objects") {
                     TaskList(tasks: viewModel.tasks.filter {$0.deleted})
                         .onAppear {
                             viewModel.getTasks()
@@ -43,6 +41,7 @@ struct ContentView: View {
             .onAppear {
                 viewModel.getTasks()
             }
+            .navigationTitle("Tasks manager")
         }
         .scrollContentBackground(.hidden)
     }

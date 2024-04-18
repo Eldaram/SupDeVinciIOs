@@ -8,7 +8,7 @@
 import Foundation
 
 class ContentViewModel: ObservableObject {
-    var model = TaskModel()
+    var model = TaskModel.shared
     var received: Bool = false
     @Published var tasks: [Task] = []
     

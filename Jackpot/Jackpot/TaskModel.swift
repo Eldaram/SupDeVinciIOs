@@ -8,9 +8,12 @@
 import Foundation
 
 class TaskModel {
+    
+    static var shared = TaskModel()
+    
     var taskList: [Task] = [ ]
     
-    init() {
+    private init() {
         genTask()
     }
     
