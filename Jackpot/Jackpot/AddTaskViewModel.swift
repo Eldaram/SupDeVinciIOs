@@ -13,6 +13,8 @@ class AddTaskViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var desc: String = ""
     @Published var priority: Bool = false
+    @Published var completed: Bool = false
+    @Published var deleted: Bool = false
     
     var isAlert: Bool = false
     var errorMessage: String = ""
@@ -28,9 +30,14 @@ class AddTaskViewModel: ObservableObject {
         return task
     }
     
+    
     func addTaskList() {
         guard let task = createTask() else { return }
         model.taskList.append(task)
+    }
+    
+    func updateTaskList(taskUpdate: ((String, String, Bool, Bool, Bool) -> ())?) {
+        taskUpdate?(name, desc, completed, deleted, priority)
     }
     
     func resetData() {
@@ -43,5 +50,7 @@ class AddTaskViewModel: ObservableObject {
         name = task.name
         desc = task.desc
         priority = task.priority
+        completed = task.completed
+        deleted = task.deleted
     }
 }

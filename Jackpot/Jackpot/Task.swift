@@ -30,4 +30,12 @@ class Task {
     func prioritizing(){
         priority = !priority
     }
+    
+    func update(name: String, desc: String, completed: Bool, deleted: Bool, priority: Bool) {
+        self.name = name
+        self.desc = desc
+        self.completed = completed
+        self.deleted = deleted
+        self.priority = priority
+    }
 }

@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct AddTaskView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     var taskOpt: Task?
+    var taskUpdate: ((String, String, Bool, Bool, Bool) -> ())?
     @StateObject var viewModel = AddTaskViewModel()
     
     var body: some View {
-        VStack {
-            Text("Task: \(viewModel.name)")
-            Text("Details: \(viewModel.desc)")
-            
             Form {
                 TextField("Task", text: $viewModel.name) {
                     
@@ -27,25 +26,40 @@ struct AddTaskView: View {
                     Text("Important")
                 }
                 
-                Button("Submit") {
-                    viewModel.addTaskList()
-                    viewModel.resetData()
+                if (taskOpt != nil) {
+                    Toggle(isOn: $viewModel.completed) {
+                        Text("Completed")
+                            .foregroundStyle(.green)
+                    }
+                    Toggle(isOn: $viewModel.deleted) {
+                        Text("Deleted")
+                            .foregroundStyle(.red)
+                    }
+                }
+                
+                Button(taskOpt != nil ? "Edit" : "Submit") {
+                    if (taskOpt != nil) {
+                        viewModel.updateTaskList(taskUpdate: taskUpdate)
+                    }
+                    else {
+                        viewModel.addTaskList()
+                        viewModel.resetData()
+                    }
+                    self.presentationMode.wrappedValue.dismiss()
                 }
                 .alert(viewModel.errorMessage, isPresented: $viewModel.isAlert) {
                     
                 }
             }
-            
-        }
         .onAppear() {
             if let task: Task = taskOpt {
                 viewModel.setData(task: task)
             }
         }
-        .navigationTitle("Add a new task")
+        .navigationTitle(taskOpt != nil ? "Edit a task" : "Add a new task")
     }
 }
 
 #Preview {
-    AddTaskView(taskOpt: Task(name: "city", desc: "random"))
+    AddTaskView()
 }
