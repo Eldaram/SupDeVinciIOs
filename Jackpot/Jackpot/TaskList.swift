@@ -12,13 +12,7 @@ struct TaskList: View {
     
     var body: some View {
         List(tasks, id: \.name){ task in
-            @State var animate:Bool = false
-            HStack {
-                Spacer()
-                TaskCard(id:0, title: task.name, desc:task.desc, completed: task.completed, completeing: task.completing, deleting: task.deleting)
-                Spacer()
-                
-            }
-        }
+            TaskCard(id:0, title: task.name, desc:task.desc, completed: task.completed, completeing: task.completing, deleting: task.deleting)
+        }.listStyle(PlainListStyle())
     }
 }

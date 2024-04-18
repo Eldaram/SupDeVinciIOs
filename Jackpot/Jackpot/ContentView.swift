@@ -14,6 +14,17 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .fill(.blue)
+                        .frame(width: 250, height: 50)
+                    Button(action: {
+                        viewModel.addDefaultTask()
+                    }, label: {
+                        Image(systemName: "plus").foregroundColor(.black)
+                        Text("New task").foregroundColor(.black)
+                    })
+                }
                 TaskList(tasks: viewModel.tasks.filter {!$0.deleted})
                 Button(action: {
                     viewModel.getTasks()
@@ -21,20 +32,19 @@ struct ContentView: View {
                     Text("Refresh")
                 })
                 Spacer()
-                Button(action: {
-                    viewModel.getTasks()
-                }, label: {
-                    NavigationLink("Deletes object") {
-                        TaskList(tasks: viewModel.tasks.filter {$0.deleted})
-                    }
-                })
-                
+                NavigationLink("Deletes object") {
+                    TaskList(tasks: viewModel.tasks.filter {$0.deleted})
+                        .onAppear {
+                            viewModel.getTasks()
+                        }
+                }
                 
             }
             .onAppear {
                 viewModel.getTasks()
             }
         }
+        .scrollContentBackground(.hidden)
     }
     
     private func validateTask(task: Task) {

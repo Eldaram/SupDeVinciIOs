@@ -24,24 +24,19 @@ struct TaskCard: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 25.0)
+            Color.white
+            RoundedRectangle(cornerRadius: 5.0)
                 .fill(getColor())
-                .frame(width: 250, height: 250)
+                .frame(width: 350, height: 75)
                 .animation(.easeInOut, value: completed)
             
             VStack {
-                ZStack {
-                    Text(title)
-                        .textAspect()
-                }
-                ZStack {
-                    Text(desc)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(title.prefix(25) + (title.count > 25 ? "…" : ""))
                         .font(.title2)
                         .fontWeight(.semibold)
+                Text(desc.prefix(40) + (desc.count > 40 ? "…" : ""))
+                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundStyle(.black)
-                        .frame(width: 180, height: 120)
-                }
             }
         }.swipeActions(edge: .trailing) {
             Button(role: .cancel, action: {
@@ -61,5 +56,7 @@ struct TaskCard: View {
 }
 
 #Preview {
-    TaskCard(id: 0, title: "Do the app", desc:"Lot of work to do", completed: false, completeing: {}, deleting: {} )
+    TaskCard(id: 0, title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean magna risus, pharetra iaculis purus id, posuere dapibus nibh. Nam varius a leo a suscipit. Curabitur lobortis velit in ex fringilla pulvinar. In aliquam, est et commodo mollis, urna nisl sodales nibh, placerat lobortis dolor diam id enim. Integer et eleifend metus. Praesent dapibus feugiat augue, ut tincidunt arcu molestie id. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam lectus nisi, dapibus vel tortor in, tristique porta enim. Curabitur feugiat vestibulum suscipit. Nulla vitae lacinia mi.",
+             desc:"Lorem ipsum dolor sit",
+             completed: false, completeing: {}, deleting: {} )
 }

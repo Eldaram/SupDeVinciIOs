@@ -15,4 +15,13 @@ class ContentViewModel: ObservableObject {
     func getTasks() {
         tasks = model.taskList
     }
+    
+    func addTask(task: Task) {
+        model.addTask(task: task)
+        getTasks()
+    }
+    
+    func addDefaultTask() {
+        addTask(task: Task(name: "adding", desc: "serius"))
+    }
 }
